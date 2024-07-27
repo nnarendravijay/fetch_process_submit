@@ -1,10 +1,10 @@
 package com.hubspot.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hubspot.exception.ApiException;
 import com.hubspot.model.Data;
-import com.hubspot.util.Utils;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
