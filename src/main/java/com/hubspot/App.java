@@ -36,7 +36,7 @@ public class App {
         new App().run(apiUrl, apiKey);
     }
 
-    private void run(String apiUrl, String apiKey) {
+    void run(String apiUrl, String apiKey) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new RetryInterceptor(MAX_RETRIES, RETRY_DELAY_MILLIS))
                 .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
