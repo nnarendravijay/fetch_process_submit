@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+//TODO: Based on use case, we could implement this as a daemon using connection pooling, mTLS for efficiency and security
 public class App {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     private static final int TIMEOUT_SECONDS = 10;
