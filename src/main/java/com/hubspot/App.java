@@ -5,6 +5,7 @@ import com.hubspot.exception.ApiException;
 import com.hubspot.model.Data;
 import com.hubspot.service.ApiService;
 import com.hubspot.service.DataProcessor;
+import com.hubspot.service.RetryInterceptor;
 import com.hubspot.util.Utils;
 import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
@@ -18,6 +19,8 @@ import java.util.concurrent.TimeUnit;
 public class App {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     private static final int TIMEOUT_SECONDS = 10;
+    private static final int MAX_RETRIES = 10;
+    private static final int RETRY_DELAY_MILLIS = 2000;
 
     public static void main(String[] args) {
         final String apiUrl = Utils.getEnvCaseInsensitive("API_URL");
@@ -35,6 +38,7 @@ public class App {
 
     private void run(String apiUrl, String apiKey) {
         OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new RetryInterceptor(MAX_RETRIES, RETRY_DELAY_MILLIS))
                 .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 .writeTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
