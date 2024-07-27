@@ -4,7 +4,7 @@
 This project demonstrates fetching data from an API, processing it, and submitting the processed data to another API. It includes comprehensive error handling, resiliency features, and follows best practices in software engineering.
 
 ## Prerequisites
-- Java 17
+- Java 17 or higher
 - Gradle 8.0 or higher
 
 ## Setup
@@ -61,4 +61,5 @@ To run the application:
 
 ## Additional Information
 - Ensure that all environment variables are set correctly before running the application.
+- Uses RetryInterceptor to implement basic retries. We can implement backoff and/or circuit breakers based on need.
 - Modify `build.gradle` for any specific configurations or additional tasks as required.
