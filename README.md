@@ -4,7 +4,7 @@
 This project demonstrates fetching data from an API, processing it, and submitting the processed data to another API. It includes comprehensive error handling, resiliency features, and follows best practices in software engineering.
 
 ## Prerequisites
-- Java 17 or higher
+- Java 21 or higher
 - Gradle 8.0 or higher
 
 ## Setup

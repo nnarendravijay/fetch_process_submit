@@ -1,6 +1,8 @@
 package com.hubspot.service;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hubspot.exception.ApiException;
@@ -56,13 +58,15 @@ public class ApiService {
             }
 
             try {
-                List<Data> dataList = objectMapper.readValue(bodyString,
-                        objectMapper.getTypeFactory().constructCollectionType(List.class, Data.class));
+                List<Data> dataList = objectMapper.readValue(bodyString, new TypeReference<>() {});
                 logger.debug("Deserialization successful: {}", dataList);
                 return dataList;
-            } catch (JsonProcessingException e) {
-                logger.error("Response from API Service doesn't conform to Data model: {}", bodyString, e);
-                return Collections.emptyList();
+            } catch (JsonParseException e) {
+                logger.error("Malformed JSON received from API: {}", bodyString, e);
+                throw new ApiException("Malformed JSON received from API", e);
+            } catch (JsonMappingException e) {
+                logger.error("JSON doesn't conform to Data model: {}", bodyString, e);
+                throw new ApiException("JSON doesn't conform to Data model", e);
             }
         } finally {
             if (responseBody != null) {

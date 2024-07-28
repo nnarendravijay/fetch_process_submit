@@ -51,6 +51,9 @@ public class App {
             logger.info("Starting application");
 
             List<Data> dataList = apiService.fetchData();
+            if (dataList.isEmpty()) {
+                return;
+            }
             double average = dataProcessor.calculateAverage(dataList);
             logger.info("Average ID value: {}", average);
 
