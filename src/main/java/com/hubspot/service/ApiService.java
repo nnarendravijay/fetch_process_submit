@@ -35,7 +35,7 @@ public class ApiService {
     public CallRecords fetchData() throws IOException {
         logger.info("Fetching data from API");
         Request request = new Request.Builder()
-                .url(Objects.requireNonNull(apiUrl) + "/test-dataset?userKey=9d0ec4894762ef3d2b564ae6e80f")
+                .url(Objects.requireNonNull(apiUrl) + "/dataset?userKey=9d0ec4894762ef3d2b564ae6e80f")
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .build();
 
@@ -83,7 +83,7 @@ public class ApiService {
 
         RequestBody body = RequestBody.create(jsonData, MediaType.parse("application/json"));
         Request request = new Request.Builder()
-                .url(Objects.requireNonNull(apiUrl) + "/test-result?userKey=9d0ec4894762ef3d2b564ae6e80f") //"/result?userKey=9d0ec4894762ef3d2b564ae6e80f")
+                .url(Objects.requireNonNull(apiUrl) + "/result?userKey=9d0ec4894762ef3d2b564ae6e80f")
                 .post(body)
                 .addHeader("Authorization", "Bearer " + apiKey)
                 .build();
