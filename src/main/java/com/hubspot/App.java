@@ -2,7 +2,10 @@ package com.hubspot;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hubspot.exception.ApiException;
-import com.hubspot.model.Data;
+import com.hubspot.model.CallRecord;
+import com.hubspot.model.CallRecords;
+import com.hubspot.model.Result;
+import com.hubspot.model.Results;
 import com.hubspot.service.ApiService;
 import com.hubspot.service.DataProcessor;
 import com.hubspot.service.RetryInterceptor;
@@ -50,17 +53,17 @@ public class App {
         try {
             logger.info("Starting application");
 
-            List<Data> dataList = apiService.fetchData();
-            if (dataList.isEmpty()) {
+            CallRecords callRecords = apiService.fetchData();
+            if (callRecords.callRecords().isEmpty()) {
                 return;
             }
-            double average = dataProcessor.calculateAverage(dataList);
-            logger.info("Average ID value: {}", average);
+            List<Result> results = DataProcessor.findMaxConcurrentCallsPerCustomerPerDay(callRecords.callRecords());
+            logger.info(results.toString());
+            Results resultsWrapper = new Results(results);
 
-            // Modify data as needed
-            // ...
+//            logger.info("Max concurrent calls per customer per day" + resultsWrapper);
 
-            apiService.sendData(dataList);
+            apiService.sendData(resultsWrapper);
             logger.info("Data sent successfully");
         } catch (ApiException e) {
             logger.error("An API error occurred", e);
